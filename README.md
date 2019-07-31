@@ -1,2 +1,3 @@
 # base
-##Java foundation
+Java foundation
+Java基础
