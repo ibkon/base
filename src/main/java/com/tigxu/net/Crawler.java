@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +29,10 @@ import org.jsoup.select.Elements;
 import org.junit.Test;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.selector.Html;
+import us.codecraft.webmagic.selector.Selectable;
 
 /***
  * 爬取招聘信息
@@ -57,16 +61,22 @@ public class Crawler {
 	@Test
 	public void wmc() {
 		PageProcessor	pp	= new PageProcessor() {
+			Site	site	= Site.me().setRetryTimes(2).setSleepTime(1500);
 			@Override
 			public void process(Page page) {
+				Html html	= page.getHtml();
+				Selectable	selectable	= html.css(".bookinfo");
 
+				System.out.println(selectable.$("h4 a"));
 			}
 
 			@Override
 			public Site getSite() {
-				return null;
+				return site;
 			}
 		};
+		String	url	= "https://www.sbiquge.com/s.php?q="+"我的女友是丧尸";
+		Spider.create(pp).addUrl(url).thread(1).run();
 	}
 	public void testat() {
 		HttpGet		httpGet		= new HttpGet("http://www.jd.com");
