@@ -26,6 +26,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Test;
+import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.processor.PageProcessor;
 
 /***
  * 爬取招聘信息
@@ -53,7 +56,17 @@ public class Crawler {
 	 */
 	@Test
 	public void wmc() {
-		System.out.println("wmc start");
+		PageProcessor	pp	= new PageProcessor() {
+			@Override
+			public void process(Page page) {
+
+			}
+
+			@Override
+			public Site getSite() {
+				return null;
+			}
+		};
 	}
 	public void testat() {
 		HttpGet		httpGet		= new HttpGet("http://www.jd.com");
