@@ -11,7 +11,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,12 +29,16 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Test;
-import us.codecraft.webmagic.Page;
-import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.*;
+import us.codecraft.webmagic.downloader.HttpClientDownloader;
+import us.codecraft.webmagic.pipeline.Pipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.proxy.Proxy;
+import us.codecraft.webmagic.proxy.SimpleProxyProvider;
 import us.codecraft.webmagic.selector.Html;
 import us.codecraft.webmagic.selector.Selectable;
+
+import javax.print.Doc;
 
 /***
  * 爬取招聘信息
@@ -55,6 +61,11 @@ public class Crawler {
         }
         return null;
 	}
+	@Test
+	public void test(){
+		String	s="()荒凉的街道上，一只丧尸正在无意识地游荡着。";
+		System.out.println(s.replaceAll("\\(\\)", ""));
+	}
 	/**
 	 * web magic爬虫框架
 	 */
@@ -62,21 +73,86 @@ public class Crawler {
 	public void wmc() {
 		PageProcessor	pp	= new PageProcessor() {
 			Site	site	= Site.me().setRetryTimes(2).setSleepTime(1500);
+			private Map<String,String> key;
 			@Override
 			public void process(Page page) {
+				if(key==null){
+					key=new HashMap<>();
+					key.put("sè","色");
+					key.put("xing", "性");
+					key.put("cāo", "操");
+
+				}
 				Html html	= page.getHtml();
-				Selectable	selectable	= html.css(".bookinfo");
+				System.out.println(html);
+                Selectable	selectable	= html.css(".bookinfo");
 
-				System.out.println(selectable.$("h4 a"));
+				if(selectable.get() != null){
+
+					//搜索到小说信息
+					String	bookUri	= html.xpath("//div[@class=\"bookinfo\"]/h4/a/@href").get();
+					if(bookUri!=null){
+						page.addTargetRequest("https://www.sbiquge.com"+bookUri);
+					}
+				}
+				else {
+					selectable	= html.css(".listmain dl");
+					if(selectable.get()!=null){
+						//读取目录列表
+						String	ht	= selectable.get();
+						Document	document	= Jsoup.parse(ht.substring(0,ht.indexOf("<dt>"))+ht.substring(ht.lastIndexOf("</dt>")+5));
+						Elements	elements	= document.select("dd a");
+						int i=0;
+						for(Element	e:elements){
+							page.addTargetRequest("https://www.sbiquge.com"+e.attr("href"));
+							break;
+						}
+					}
+					else {
+						selectable	= html.css(".showtxt");
+						if(selectable.get()!=null){
+                            System.out.println(selectable.get());
+                                /*if(selectable.get()!=null){
+                                    String	ht	= selectable.get().trim().replaceAll("&nbsp;", "");
+                                    ht	= ht.replaceAll("<br>", "");
+                                    ht	= ht.substring(ht.indexOf(">")+1, ht.lastIndexOf("</div>"));
+                                    ht	= ht.replaceAll("\\(\\)", "");
+                                    ht	= ht.substring(0,ht.indexOf(page.getUrl().get()));
+                                    ht	= ht.replaceAll("\n\n","\n");
+                                    StringBuilder	stringBuilder	= new StringBuilder();
+                                    for(String s:ht.split("\n")){
+                                        s=s.trim();
+								if(s.length()>0){
+									for(String skey:key.keySet()){
+										s=s.replaceAll(skey,key.get(skey));
+									}
+									stringBuilder.append(s);
+								}
+							}*/
+							//page.putField("第一章", stringBuilder.toString());
+						}
+						else {
+							System.out.println("无法解析的html");
+						}
+					}
+				}
 			}
-
 			@Override
 			public Site getSite() {
 				return site;
 			}
 		};
 		String	url	= "https://www.sbiquge.com/s.php?q="+"我的女友是丧尸";
-		Spider.create(pp).addUrl(url).thread(1).run();
+		HttpClientDownloader hcd	= new HttpClientDownloader();
+		hcd.setProxyProvider(SimpleProxyProvider.from(new Proxy("127.0.0.1",1080)));
+
+		Spider.create(pp).addUrl(url).thread(1).addPipeline(new Pipeline() {
+			@Override
+			public void process(ResultItems resultItems, Task task) {
+				//在获取章节链接时将章节名保存到有序容器，然后按序读取并保存到持久层
+				System.out.println(resultItems);
+			}
+		}).setDownloader(hcd).run();
 	}
 	public void testat() {
 		HttpGet		httpGet		= new HttpGet("http://www.jd.com");
