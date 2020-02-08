@@ -1,9 +1,15 @@
-package com.tigxu.tool;
+package top.yukino.base.tool;
 
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+/***
+ * 多线程计算HASH值
+ * @author Xian
+ *
+ * @param <T>
+ */
 public abstract class TheadHash<T> extends Hash{
     private List<T>                 obj;
     private Map<Object,String>     objHash;

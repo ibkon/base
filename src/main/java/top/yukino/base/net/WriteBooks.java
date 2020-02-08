@@ -1,4 +1,4 @@
-package com.tigxu.net;
+package top.yukino.base.net;
 
 import org.junit.Test;
 

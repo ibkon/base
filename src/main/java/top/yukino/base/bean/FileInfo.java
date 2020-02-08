@@ -1,10 +1,15 @@
-package com.tigxu.bean;
+package top.yukino.base.bean;
 
+/***
+ * 文件信息
+ * @author Xian
+ *
+ */
 public class FileInfo {
-    private String  hash;
-    private String  relativePath;
-    private String  absolutePath;
-    private boolean isFile;
+    private String  hash;				//文件摘要
+    private String  relativePath;		//相对路径
+    private String  absolutePath;		//绝对路径
+    private boolean isFile;				//是否文件
     public FileInfo(){}
     public FileInfo(String hash, String relativePath, String absolutePath, boolean isFile) {
         this.hash = hash;

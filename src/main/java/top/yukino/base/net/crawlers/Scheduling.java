@@ -1,4 +1,4 @@
-package com.tigxu.net.crawlers;
+package top.yukino.base.net.crawlers;
 
 import org.junit.Test;
 import us.codecraft.webmagic.Spider;

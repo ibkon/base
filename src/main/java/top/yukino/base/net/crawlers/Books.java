@@ -1,4 +1,4 @@
-package com.tigxu.net.crawlers;
+package top.yukino.base.net.crawlers;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

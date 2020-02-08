@@ -1,4 +1,4 @@
-package com.tigxu.net;
+package top.yukino.base.net;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

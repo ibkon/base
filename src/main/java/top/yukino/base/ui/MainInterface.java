@@ -1,4 +1,4 @@
-package com.tigxu.ui;
+package top.yukino.base.ui;
 
 import org.junit.Test;
 
