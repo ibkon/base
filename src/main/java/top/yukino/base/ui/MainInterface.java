@@ -9,7 +9,12 @@ import java.util.concurrent.TimeUnit;
  * UI主界面
  */
 public class MainInterface extends JFrame{
-    public MainInterface(){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 781477974689414925L;
+
+	public MainInterface(){
         //初始化界面
         setTitle("Base UI");
         setSize(500,400);

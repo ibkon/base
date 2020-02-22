@@ -61,11 +61,6 @@ public class Crawler {
         }
         return null;
 	}
-	@Test
-	public void test(){
-		String	s="()荒凉的街道上，一只丧尸正在无意识地游荡着。";
-		System.out.println(s.replaceAll("\\(\\)", ""));
-	}
 	/**
 	 * web magic爬虫框架
 	 */
