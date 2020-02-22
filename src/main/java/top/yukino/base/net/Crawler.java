@@ -12,7 +12,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,7 +37,6 @@ import us.codecraft.webmagic.proxy.SimpleProxyProvider;
 import us.codecraft.webmagic.selector.Html;
 import us.codecraft.webmagic.selector.Selectable;
 
-import javax.print.Doc;
 
 /***
  * 爬取招聘信息
@@ -97,7 +95,6 @@ public class Crawler {
 						String	ht	= selectable.get();
 						Document	document	= Jsoup.parse(ht.substring(0,ht.indexOf("<dt>"))+ht.substring(ht.lastIndexOf("</dt>")+5));
 						Elements	elements	= document.select("dd a");
-						int i=0;
 						for(Element	e:elements){
 							page.addTargetRequest("https://www.sbiquge.com"+e.attr("href"));
 							break;

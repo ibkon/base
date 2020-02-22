@@ -1,6 +1,5 @@
 package top.yukino.base.net.crawlers;
 
-import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 
