@@ -1,4 +1,4 @@
-package com.tigxu.tool;
+package top.yukino.base.tool;
 
 import java.util.HashMap;
 import java.util.Map;
