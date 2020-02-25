@@ -32,7 +32,7 @@ public class Application {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Ibkon java bases\n");
 		builder.append("===>本程序为个人练习编写，功能组合较为杂乱，参数解析为固定。\n");
-		builder.append("===>基本使用方法，目前仅提供命令行使用，计划今后加入UI使用。\n");
+		builder.append("===>基本使用方法，目前仅提供命令行使用。\n");
 		builder.append("--fec * * * *	文件编码功能（输入文件，输出路径,输入编码，输出编码）。\n");
 
 		System.out.println(builder);
