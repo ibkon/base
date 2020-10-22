@@ -13,10 +13,10 @@ import top.yukino.base.bean.FileInfo;
  * 当设置MOD_NET_IN时，in格式为监听端口，out为下一个网络地址或本地目录
  * 当设置MOD_NET_OUT时，in为本地保存目录，out格式为"127.0.0.1:1150/path"或"yukino.top:1150/path"
  */
-public class SynFile {
+public class SynFile1 {
 	@Test
 	public void test() {
-		SynFile syn = new SynFile();
+		SynFile1 syn = new SynFile1();
 		syn.backup("E:\\JavaWeb\\blog", "E:\\JavaWeb\\backup", MOD_COPY);
 	}
 
@@ -30,7 +30,7 @@ public class SynFile {
 	private byte[] buffer;
 	private String inPath, outPath;
 
-	public SynFile() {
+	public SynFile1() {
 		this.fList = new ArrayList<File>();
 		this.buffer = new byte[0x20000];
 	}

@@ -39,6 +39,6 @@ public class MainInterface extends JFrame{
             }
         });
         //10s后测试线程退出关闭窗口
-        Thread.sleep(10000);
+        Thread.sleep(5000);
     }
 }
